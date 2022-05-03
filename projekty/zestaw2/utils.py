@@ -3,7 +3,6 @@ class Utils:
     def degree_seq_to_adj_matrix(list):
         size = len(list)
         adj_matrix1 = [[0 for x in range(size)] for y in range(size)]
-        print(list)
         for i in range(0, size):
             for j in range(i + 1, size):
                 if list[i] > 0 and list[j] > 0:

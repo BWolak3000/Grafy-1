@@ -4,7 +4,7 @@ import numpy as np
 import random
 from utils import Utils
 
-class Main:
+class Zestaw2_zad1_zad2:
     @staticmethod
     def isSumEvenWhenOddNumberOfVertices(list):
         sum = 0
@@ -18,7 +18,7 @@ class Main:
             print("Nie zostal podany ciag liczb!")
             return False
 
-        if not Main.isSumEvenWhenOddNumberOfVertices(list):
+        if not Zestaw2_zad1_zad2.isSumEvenWhenOddNumberOfVertices(list):
             return False
 
         list = sorted(list, reverse=True)
@@ -70,7 +70,7 @@ class Main:
             if edge1Idx != edge2Idx:
                 edge1 = listOfEdges[edge1Idx]
                 edge2 = listOfEdges[edge2Idx]
-                if Main.can_edges_be_switched(G, edge1, edge2):
+                if Zestaw2_zad1_zad2.can_edges_be_switched(G, edge1, edge2):
                     G.remove_edge(edge1[0], edge1[1])
                     G.remove_edge(edge2[0], edge2[1])
                     # print('edge ' +str(edge1) + ' ' +str(edge2))
@@ -92,7 +92,7 @@ class Main:
         list = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
         # list = sorted(list, reverse=True)
 
-        if Main.isGraphical(list):
+        if Zestaw2_zad1_zad2.isGraphical(list):
             # zad1
             print("Jest graficzny!")
             adj_matrix = Utils.degree_seq_to_adj_matrix(list)
@@ -105,7 +105,7 @@ class Main:
             plt.show()
 
             # zad2
-            G2 = Main.randomizeGraphAdjMatrix(G, 10)
+            G2 = Zestaw2_zad1_zad2.randomizeGraphAdjMatrix(G, 10)
             nx.draw(G2, pos=nx.circular_layout(G2), node_color="red", with_labels=True)
             plt.draw()
             plt.show()
@@ -114,4 +114,4 @@ class Main:
 
 
 if __name__ == "__main__":
-    Main.main([])
+    Zestaw2_zad1_zad2.main([])
