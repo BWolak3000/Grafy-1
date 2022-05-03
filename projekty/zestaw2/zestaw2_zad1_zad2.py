@@ -7,6 +7,10 @@ from utils import Utils
 class Zestaw2_zad1_zad2:
     @staticmethod
     def isSumEvenWhenOddNumberOfVertices(list):
+        size = len(list)
+        if size % 2 == 0:
+            return True
+
         sum = 0
         for i in list:
             sum += i
@@ -55,25 +59,19 @@ class Zestaw2_zad1_zad2:
     @staticmethod
     def randomizeGraphAdjMatrix(G, number):
         numberOfEdges = len(G.edges())
-        # listOfEdges = list(G.edges(data=True))
-        # jeszcze dołożyć flagę czy byla zmiana bo chyba to skutku
         has_been_change = False
         i = 0
         while i < number:
             has_been_change = False
             listOfEdges = list(G.edges())
-            print(listOfEdges)
             edge1Idx = random.randint(0, numberOfEdges - 1)
             edge2Idx = random.randint(0, numberOfEdges - 1)
-            print(edge1Idx)
-            print(edge2Idx)
             if edge1Idx != edge2Idx:
                 edge1 = listOfEdges[edge1Idx]
                 edge2 = listOfEdges[edge2Idx]
                 if Zestaw2_zad1_zad2.can_edges_be_switched(G, edge1, edge2):
                     G.remove_edge(edge1[0], edge1[1])
                     G.remove_edge(edge2[0], edge2[1])
-                    # print('edge ' +str(edge1) + ' ' +str(edge2))
                     if edge1[0] < edge2[1]:
                         G.add_edge(edge1[0], edge2[1])
                     else:
