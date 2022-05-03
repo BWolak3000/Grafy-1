@@ -4,6 +4,7 @@ import numpy as np
 from utils import Utils
 from zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
 
+
 class Main:
 
     @staticmethod
@@ -29,6 +30,16 @@ class Main:
         return comp
 
     @staticmethod
+    def find_and_print_biggest_component(comp):
+        array = np.array(comp)
+        unique, counts = np.unique(array, return_counts=True)
+        print('Lista wierzcholkow w najwiekszej spojnej skladowej: ', end=' ')
+        max_idx = np.argmax(counts)
+        for idx_comp in range(0, len(comp)):
+            if comp[idx_comp] == unique[max_idx]:
+                print(idx_comp, end=' ')
+
+    @staticmethod
     def main(args):
         list = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
 
@@ -37,12 +48,14 @@ class Main:
             adj_matrix = Utils.degree_seq_to_adj_matrix(list)
             adj_matrix_np = np.matrix(adj_matrix)
             G = nx.from_numpy_matrix(adj_matrix_np)
-            comp_colors = Main.components(G)
-            nx.draw(G, pos=nx.circular_layout(G), node_color=comp_colors, with_labels=True)
+            comp = Main.components(G)
+            Main.find_and_print_biggest_component(comp)
+            nx.draw(G, pos=nx.circular_layout(G), node_color=comp, with_labels=True)
             plt.draw()
             plt.show()
         else:
             print("Nie jest graficzny!")
+
 
 if __name__ == "__main__":
     Main.main([])
