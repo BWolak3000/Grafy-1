@@ -2,7 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
 import random
-from utils import Utils
+
 
 class Zestaw2_zad1_zad2:
     @staticmethod
@@ -17,30 +17,46 @@ class Zestaw2_zad1_zad2:
         return sum % 2 == 0
 
     @staticmethod
-    def isGraphical(list):
-        if len(list) == 0:
+    def isGraphical(degree_sequence):
+        # lista wierzcholkow z ich stopniami
+        size = len(degree_sequence)
+
+        if size == 0:
             print("Nie zostal podany ciag liczb!")
-            return False
+            return False, None
 
-        if not Zestaw2_zad1_zad2.isSumEvenWhenOddNumberOfVertices(list):
-            return False
-
-        list = sorted(list, reverse=True)
-
-        c = 0
+        adj_matrix1 = [[0 for x in range(size)] for y in range(size)]
+        list_of_vertices = [(i, degree_sequence[i]) for i in range(0, size)]
+        if not Zestaw2_zad1_zad2.isSumEvenWhenOddNumberOfVertices(degree_sequence):
+            return False, None
+        list_of_vertices.sort(key=lambda x: int(x[1]), reverse=True)
         while True:
-            c += 1
-            if all(item == 0 for item in list):
-                return True
-            if list[0] >= len(list) or any(item < 0 for item in list):
-                return False
-            i = 1
-            while i <= list[0]:
-                list[i] = list[i] - 1
-                i = i + 1
+            if all(list_of_vertices[i][1] == 0 for i in range(0, size)):
+                return True, adj_matrix1
+            if list_of_vertices[0][1] >= size or any(list_of_vertices[i][1] < 0 for i in range(0, size)):
+                return False, None
 
-            list[0] = 0
-            list = sorted(list, reverse=True)
+            current_degree = list_of_vertices[0][1]  # bo będzie największy stopień
+
+            #zaczynam od łaczenia z kolejnym, gdyby było 0 to by było połączone ze sobą
+            i = 1
+            while i <= current_degree:
+                # idx1 - numer wierzcholka pierwszego który jest łączony z wiezchołkiem drugim (idx2)
+                idx1 = list_of_vertices[0][0]
+                idx2 = list_of_vertices[i][0]
+
+                # kolejne kolumny, wiersze reprezentują numer wierzchołka, latego posługuje się indexami
+                adj_matrix1[idx1][idx2] = 1
+                adj_matrix1[idx2][idx1] = 1
+
+                # obejmuję po jednym stopniu bo są wykorzystane
+                # list_of_vertices[0][1] = list_of_vertices[0][1] - 1 #to będzie już niżej = 0
+                temp = list_of_vertices[i]
+                list_of_vertices[i] = (temp[0], temp[1] - 1)
+                i = i + 1
+            temp = list_of_vertices[0]
+            list_of_vertices[0] = (temp[0], 0)
+            list_of_vertices.sort(key=lambda x: int(x[1]), reverse=True)  # sortowanie po stopniu wierzcholka
 
     @staticmethod
     def can_edges_be_switched(G, edge1, edge2):
@@ -88,23 +104,29 @@ class Zestaw2_zad1_zad2:
     @staticmethod
     def main(args):
         list = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
-        # list = sorted(list, reverse=True)
-
-        if Zestaw2_zad1_zad2.isGraphical(list):
+        # list = [4, 2, 4, 2, 4, 2]
+        list = sorted(list, reverse=True)
+        flag, adj_matrix = Zestaw2_zad1_zad2.isGraphical(list)
+        if flag:
             # zad1
             print("Jest graficzny!")
-            adj_matrix = Utils.degree_seq_to_adj_matrix(list)
 
             # plot zad1
             adj_matrix_np = np.matrix(adj_matrix)
             G = nx.from_numpy_matrix(adj_matrix_np)
+            ax = plt.gca()
+            ax.set_title('Zadanie 1 | Graf prosty o podanych stopniach wierzchołków')
             nx.draw(G, pos=nx.circular_layout(G), node_color="red", with_labels=True)
+            _ = ax.axis('off')
             plt.draw()
             plt.show()
 
             # zad2
-            G2 = Zestaw2_zad1_zad2.randomizeGraphAdjMatrix(G, 10)
-            nx.draw(G2, pos=nx.circular_layout(G2), node_color="red", with_labels=True)
+            G = Zestaw2_zad1_zad2.randomizeGraphAdjMatrix(G, 10)
+            ax = plt.gca()
+            ax.set_title('Zadanie 2 | Graf po 10 modyfikacjach')
+            nx.draw(G, pos=nx.circular_layout(G), node_color="red", with_labels=True, ax=ax)
+            _ = ax.axis('off')
             plt.draw()
             plt.show()
         else:
