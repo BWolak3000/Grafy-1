@@ -26,17 +26,16 @@ class Zestaw2_zad5:
 
     @staticmethod
     def main(args):
-        n = 10
+        n = 7
         k = 2
         G = Zestaw2_zad5.get_random_k_regular_graph(n, k)
-
-        ax = plt.gca()
-        ax.set_title('Zadanie 5 | Losowy graf ' + str(k) + "-regularny o " + str(n) + " wierzchołkach")
-        nx.draw(G, pos=nx.circular_layout(G), node_color="red", with_labels=True, ax=ax)
-        _ = ax.axis('off')
-
-        plt.draw()
-        plt.show()
+        if G != None:
+            ax = plt.gca()
+            ax.set_title('Zadanie 5 | Losowy graf ' + str(k) + "-regularny o " + str(n) + " wierzchołkach")
+            nx.draw(G, pos=nx.circular_layout(G), node_color="red", with_labels=True, ax=ax)
+            _ = ax.axis('off')
+            plt.draw()
+            plt.show()
 
 
 if __name__ == "__main__":
