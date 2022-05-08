@@ -17,8 +17,8 @@ class Zestaw2_zad5:
             print("Jest graficzny!")
             adj_matrix_np = np.matrix(adj_matrix)
             G = nx.from_numpy_matrix(adj_matrix_np)
-            n = random.randint(0, 10)  # losuję ile razy graf zostanie zmodyfikowany (losowe zmienianie krawędzi)
-            G = Zestaw2_zad1_zad2.randomizeGraphAdjMatrix(G, n)
+            number = random.randint(0, 10)  # losuję ile razy graf zostanie zmodyfikowany (losowe zmienianie krawędzi)
+            G = Zestaw2_zad1_zad2.randomizeGraphAdjMatrix(G, number)
             return G
         else:
             print("Nie jest graficzny!")
