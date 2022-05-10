@@ -130,6 +130,20 @@ class Graph:
                             "is not a valid number of adges for a "
                             "graph with num_nodes={}, as it should "
                             "be in range <0, {}>".format(num_edges, num_nodes, num_nodes * (num_nodes - 1) / 2))
+        if num_edges > num_nodes * (num_nodes - 1) / 4:# jezeli duzo krawedzi to latwiej z pelnego grafu usuwac krawedzie niz do pustego dodawac
+            adjast_matrix = np.ones((num_nodes, num_nodes))
+            _ = 0
+            while _ < num_nodes * (num_nodes - 1) / 2 - num_edges:
+                i = random.randint(0, num_nodes)
+                j = random.randint(0, num_nodes)
+                if adjast_matrix[i][j] == 0:
+                    continue
+                else:
+                    adjast_matrix[i][j] = 0
+                    adjast_matrix[j][i] = 0
+                    _ += 1
+            return Graph.from_adjastmatrix(adjast_matrix)
+
         incidence_matrix = np.zeros((num_edges, num_nodes))
         nodes_connected = set()
         _ = 0

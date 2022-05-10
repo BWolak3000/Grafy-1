@@ -26,7 +26,7 @@ def generating_demo():
     G = Graph.Graph.generate_graph_np(8, 0.6)
     show_graph(G)
 
-    G = Graph.Graph.generate_graph_nl(8, 11)
+    G = Graph.Graph.generate_graph_nl(5, 10)
     show_graph(G)
 
 
