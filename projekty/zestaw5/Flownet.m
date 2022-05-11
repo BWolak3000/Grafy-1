@@ -5,6 +5,7 @@ classdef Flownet < Digraph
     properties
         NumberOfLayers
         Layers
+        Residual
     end
     
     methods
@@ -14,6 +15,7 @@ classdef Flownet < Digraph
             obj.NumberOfLayers = N;
             obj.Layers = cell(1,N);
             obj.Nodes = [1];
+            obj.Residual = false;
             lastid = 1;
             for i=1:N
                 amount = randi([2, N]);
@@ -57,7 +59,7 @@ classdef Flownet < Digraph
                 v = randi([2, n]);
                 if u==v
                     continue;
-                elseif A(u,v) ~= 0
+                elseif A(u,v) ~= 0 || A(v,u) ~= 0
                     continue;
                 else
                     A(u, v) = randi(10);
@@ -69,7 +71,6 @@ classdef Flownet < Digraph
         end
         
         function handle = plot(obj)
-            esize = size(obj.Edges);
             n = length(obj.Nodes);
             x = zeros(1, n);
             y = zeros(1, n);
@@ -88,8 +89,20 @@ classdef Flownet < Digraph
                 end
             end
             d = digraph(obj.Edges(1,:), obj.Edges(2,:), obj.Edges(3, :));
-            LWidths = 5*d.Edges.Weight/max(d.Edges.Weight);
+            LWidths = (5*d.Edges.Weight+1)/max(d.Edges.Weight);
             handle = plot(d,'NodeColor','m','EdgeLabel',d.Edges.Weight,'LineWidth',LWidths, 'XData', x, 'YData', y);
+            if obj.Residual
+                e = length(obj.Edges(1, :))/2;
+                highlight(handle, obj.Edges(1, e+1:end), obj.Edges(2, e+1:end), 'EdgeColor', 'g');
+            end
+        end
+        
+        function residual = getResidual(obj)
+            transposed = obj.transpose();
+            transposed.Edges(3,:) = zeros(1, length(obj.Edges));
+            residual = obj;
+            residual.Residual = true;
+            residual.Edges = [obj.Edges, transposed.Edges];
         end
     end
 end
