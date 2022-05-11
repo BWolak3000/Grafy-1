@@ -16,8 +16,8 @@ function [D, P] = johnson(g)
 %     12. do Du,v = dbu(v) − h(u) + h(v)
 %     13. return D
 
-    n = length(g.Nodes(1,:));
-    s=n+1;
+    n = length(g.Nodes);
+    s = n+1;
 % Add_s(G) // n – liczba wierzchołków grafu G
 % 1. Utwórz G0 = G ∪ s
 % 2. for każdy wierzchołek v należący do G
@@ -25,13 +25,13 @@ function [D, P] = johnson(g)
 % 4. w(s, v) = 0
 % 5. return G0
     gp = g;
-    gp.Nodes = [g.Nodes, g.Nodes(:, 1)];
-    gp.Nodes(1, s) = s;
+    gp.Nodes = [g.Nodes, s];
     newEdges = zeros(3, n);
-    for i=g.Nodes(1,1:end)
+    for i=1:n
         newEdges(1:2,i)=[s;i];
     end
     gp.Edges = [gp.Edges, newEdges];
+% -----------------------------------------
     [isValid, h, ~] = bellmanford(gp, s);
     wb = gp.Edges(3, :);
     if isValid

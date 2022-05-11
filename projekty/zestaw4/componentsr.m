@@ -6,12 +6,12 @@ function [nr, comp] = componentsr(nr, v, gt, comp)
 %     3. then comp[u] = nr
 %     4. Components_R(nr,u, GT, comp)
     A = gt.getAdjacencyMatrix();
-    u = 1:length(gt.Nodes(1,:));
+    u = 1:length(gt.Nodes);
     u = u(A(v,:)==1);
-    for i=1:length(u)
-        if comp(u(i)) == -1
-            comp(u(i)) = nr;
-            [nr, comp] = componentsr(nr, u(i), gt, comp);
+    for i=u
+        if comp(i) == -1
+            comp(i) = nr;
+            [nr, comp] = componentsr(nr, i, gt, comp);
         end
     end
 end

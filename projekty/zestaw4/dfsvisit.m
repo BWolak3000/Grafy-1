@@ -11,12 +11,12 @@ function [d, f, t] = dfsvisit(v, G, d, f, t)
     t = t + 1;
     d(v) = t;
     A = G.getAdjacencyMatrix();
-    u = 1:length(G.Nodes(1,:));
+    u = 1:length(G.Nodes);
     % fprintf(1, "v: %d\t", v);
     u = u(A(v,:)==1);
-    for i=1:length(u)
-        if d(u(i)) == -1
-            [d, f, t] = dfsvisit(u(i), G, d, f, t);
+    for i=u
+        if d(i) == -1
+            [d, f, t] = dfsvisit(i, G, d, f, t);
         end
     end
     t = t + 1;

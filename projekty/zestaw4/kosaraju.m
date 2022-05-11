@@ -17,11 +17,7 @@ function [comp] = kosaraju(d)
 %     15. comp[v] = nr
 %     16. Components_R(nr, v, GT, comp)
 %     17. return comp
-    v = d.Nodes(1, :);
-    noV = length(v);
-    e = d.Edges(1:2, :);
-    esize = size(e);
-    noE = esize(2);
+    noV = length(d.Nodes);
     md = -ones(1, noV);
     f = -ones(1, noV);
     t = 0;
@@ -32,12 +28,11 @@ function [comp] = kosaraju(d)
     end
     dt = d.transpose();
     nr = 0;
-    vt = dt.Nodes(1, :);
-    noVt = length(vt);
+    noVt = length(dt.Nodes);
     comp = -ones(1, noVt);
     [~, orderu] = sort(f, 'descend');
     for i=1:noVt
-        u = vt(orderu(i));
+        u = dt.Nodes(orderu(i));
         if comp(u) == -1
             nr = nr + 1;
             comp(u) = nr;
