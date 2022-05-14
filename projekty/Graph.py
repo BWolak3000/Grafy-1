@@ -166,7 +166,7 @@ class Graph:
             raise Exception("probability prob = {} outside <0, 1> range".format(prob))
         adjast_matrix = np.zeros((num_nodes, num_nodes))
         for i in range(num_nodes):
-            for j in range(i, num_nodes):
+            for j in range(i + 1, num_nodes):
                 if random.random() < prob:
                     adjast_matrix[i][j] = 1
                     adjast_matrix[j][i] = 1
