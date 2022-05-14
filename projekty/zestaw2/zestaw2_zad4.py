@@ -16,6 +16,7 @@ class Zestaw2_zad4:
     # Funkcja pomocnicza sprawdzająca czy graf jest spójny, zwraca typ logiczny
     @staticmethod
     def is_graph_consistent(G):
+
         # funkcja z zadania 3 zwraca wierzchołki z przyporządkowanymi numerami komponentów do których należą
         dictionary = Zestaw2_zad3.components(G)
 
