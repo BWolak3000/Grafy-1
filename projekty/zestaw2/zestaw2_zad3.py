@@ -6,6 +6,9 @@ from zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
 
 class Zestaw2_zad3:
 
+    # ZADANIE 3 ---------------------------------------------------------
+    # Napisac program do znajdowania najwiekszej spójnej składowej na grafie.
+
     @staticmethod
     def components_R(nr, v,  G, dictionary):
         for edge in G.edges(v):
@@ -51,14 +54,21 @@ class Zestaw2_zad3:
 
     @staticmethod
     def main(args):
-        list = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
-        flag, adj_matrix = Zestaw2_zad1_zad2.is_graphical(list)
-        if flag:
+        # input: sekwencja stopni wierzchołków
+        degree_sequence = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
+
+        # wykorzystanie funckji z zadania 1, która zwraca macierz sąsiedztwa do adj_matrix, jeżeli ciąg jest graficzny
+        is_graph_sequence, adj_matrix = Zestaw2_zad1_zad2.is_graphical(degree_sequence)
+
+        if is_graph_sequence:
             print("Jest graficzny!")
+
+            # z macierzy sąsiedztwa tworzę graf
             adj_matrix_np = np.matrix(adj_matrix)
             G = nx.from_numpy_matrix(adj_matrix_np)
 
             dictionary = Zestaw2_zad3.components(G)
+            print(dictionary)
             comp = []
             for key in dictionary:
                 comp.append(dictionary[key][1])

@@ -7,6 +7,9 @@ import random
 class Zestaw2_zad1_zad2:
 
     # ZADANIE 1 ---------------------------------------------------------
+    # Napisac program do sprawdzania, czy dana sekwencja liczb naturalnych
+    # jest ciagiem graficznym, i do konstruowania grafu prostego o stopniach
+    # wierzchołków zadanych przez ciag graficzny.
 
     # Funkcja sprawdzająca czy suma stopni wierzchołków jest parzysta
     # jest to warunek konieczny by graf był graficzny
@@ -86,6 +89,9 @@ class Zestaw2_zad1_zad2:
             list_of_vertices.sort(key=lambda x: int(x[1]), reverse=True)
 
     # ZADANIE 2 ---------------------------------------------------------
+    # Napisac program do randomizacji grafów prostych o zadanych stopniach
+    # wierzchołków. Do tego celu wielokrotnie powtórzyc operacje zamieniajaca
+    # losowo wybrana pare krawedzi: ab i cd na pare ad i bc.
 
     # Funkcja pomocnicza, sprawdzająca czy krawędzie mogą być zamienione,
     # zwraca True/False
@@ -109,7 +115,7 @@ class Zestaw2_zad1_zad2:
             elif (edge1[1] > edge2[0]) and G.has_edge(edge2[0], edge1[1]):
                 return False
 
-            #jeżeli wierzchołek się nie powtarza, a krawędzie jeszcze nie isteniją w grafie - zwracamy True
+            # jeżeli wierzchołek się nie powtarza, a krawędzie jeszcze nie isteniją w grafie - zwracamy True
             return True
         return False
 
@@ -139,7 +145,7 @@ class Zestaw2_zad1_zad2:
 
                 # sprawdzam czy krawędzie mogą być zamienione
                 if Zestaw2_zad1_zad2.can_edges_be_switched(G, edge1, edge2):
-                    #usuwam obie krawędzie istniejące
+                    # usuwam obie krawędzie istniejące
                     G.remove_edge(edge1[0], edge1[1])
                     G.remove_edge(edge2[0], edge2[1])
 
