@@ -1,0 +1,1 @@
+# Wyznaczyc minimalne drzewo rozpinajace (algorytm Prima lub Kruskala).
