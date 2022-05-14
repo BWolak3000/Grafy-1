@@ -12,13 +12,13 @@ class Zestaw2_zad5:
     @staticmethod
     def get_random_k_regular_graph(n, k):
         degree_seq = [k for x in range(n)]
-        flag, adj_matrix = Zestaw2_zad1_zad2.isGraphical(degree_seq)
+        flag, adj_matrix = Zestaw2_zad1_zad2.is_graphical(degree_seq)
         if flag:
             print("Jest graficzny!")
             adj_matrix_np = np.matrix(adj_matrix)
             G = nx.from_numpy_matrix(adj_matrix_np)
             number = random.randint(0, 10)  # losuję ile razy graf zostanie zmodyfikowany (losowe zmienianie krawędzi)
-            G = Zestaw2_zad1_zad2.randomizeGraphAdjMatrix(G, number)
+            G = Zestaw2_zad1_zad2.randomize_graph_adj_matrix(G, number)
             return G
         else:
             print("Nie jest graficzny!")

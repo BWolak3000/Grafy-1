@@ -52,7 +52,7 @@ class Zestaw2_zad3:
     @staticmethod
     def main(args):
         list = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
-        flag, adj_matrix = Zestaw2_zad1_zad2.isGraphical(list)
+        flag, adj_matrix = Zestaw2_zad1_zad2.is_graphical(list)
         if flag:
             print("Jest graficzny!")
             adj_matrix_np = np.matrix(adj_matrix)

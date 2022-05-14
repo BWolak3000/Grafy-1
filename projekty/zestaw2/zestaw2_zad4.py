@@ -31,7 +31,7 @@ class Zestaw2_zad4:
             for idx in range(0, len(degree_seq)):
                 degree_seq[idx] = random.randint(1, n_half)
                 degree_seq[idx] = degree_seq[idx] * 2
-            flag, adj_matrix = Zestaw2_zad1_zad2.isGraphical(degree_seq)
+            flag, adj_matrix = Zestaw2_zad1_zad2.is_graphical(degree_seq)
             if flag:
                 break
         print("Wylosowane stopnie wierzcholkow " + str(degree_seq))
@@ -40,7 +40,7 @@ class Zestaw2_zad4:
         while True:
             if Zestaw2_zad4.is_graph_consistent(G):
                 break
-            G = Zestaw2_zad1_zad2.randomizeGraphAdjMatrix(G, 1)
+            G = Zestaw2_zad1_zad2.randomize_graph_adj_matrix(G, 1)
         return G
 
     @staticmethod
