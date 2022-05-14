@@ -6,7 +6,7 @@ import random
 
 class Zestaw2_zad1_zad2:
 
-    # ZADANIE 1
+    # ZADANIE 1 ---------------------------------------------------------
 
     # Funkcja sprawdzająca czy suma stopni wierzchołków jest parzysta
     # jest to warunek konieczny by graf był graficzny
@@ -54,7 +54,8 @@ class Zestaw2_zad1_zad2:
             if list_of_vertices[0][1] >= size or any(list_of_vertices[i][1] < 0 for i in range(0, size)):
                 return False, None
 
-            # przed rozpoczęciem pętli wybieramy wierzchołek o największym stopniu, czyli pierwszy na liście posortowanej nierosnąco
+            # przed rozpoczęciem wewnętrznej pętli wybieramy wierzchołek o największym stopniu,
+            # czyli pierwszy na liście posortowanej nierosnąco
             # current_degree zawiera stopień wierzchołka
             current_degree = list_of_vertices[0][1]
 
@@ -66,38 +67,56 @@ class Zestaw2_zad1_zad2:
                 idx2 = list_of_vertices[i][0]
 
                 # kolejne kolumny, wiersze reprezentują numer wierzchołka, dlatego posługuje się indexami
-                # i odbijam względem diagonali
+                # i odbijam względem diagonali, bo graf nieskierowany
                 adj_matrix1[idx1][idx2] = 1
                 adj_matrix1[idx2][idx1] = 1
 
                 # obejmuję po jednym stopniu bo są wykorzystane
 
-                # list_of_vertices[0][1] = list_of_vertices[0][1] - 1 #to będzie już niżej = 0
-                temp = list_of_vertices[i]  # muszę zrobić temp, bo to tuple (niemodyfikowalne)
+                # poniżej odpowiednik operacji: list_of_vertices[i][1] = list_of_vertices[i][1] - 1
+                temp = list_of_vertices[i]  # muszę zrobić temp, bo niemodyfikowalne
                 list_of_vertices[i] = (temp[0], temp[1] - 1)
                 i = i + 1
+
+            # ten sam efekt co odejmowanie po stopniu w pętli wyżej,
+            # zamiast tego powykorzystaniu całej wartosci obecnego stopnia - przypisuję temu wierzchołkowi warotść 0
             temp = list_of_vertices[0]
             list_of_vertices[0] = (temp[0], 0)
-            list_of_vertices.sort(key=lambda x: int(x[1]), reverse=True)  # sortowanie po stopniu wierzcholka
+            # sortowanie nierosnąc opo stopniu wierzcholka, bo powyżej zmieniliśmy tamten stopień na 0 (wykorzystany)
+            list_of_vertices.sort(key=lambda x: int(x[1]), reverse=True)
 
+    # ZADANIE 2 ---------------------------------------------------------
+
+    # Funkcja pomocnicza, sprawdzająca czy krawędzie mogą być zamienione,
+    # zwraca True/False
+    # edge1 i edge2 to tablica [int,int] czyli pierwszy i drugi wierzchołek w krawędzi
     @staticmethod
     def can_edges_be_switched(G, edge1, edge2):
+        # sprawdzenie czy żaden wierzchołek krawędzi nie jest taki sam
         if edge1[0] != edge2[0] and edge1[0] != edge2[1] and edge1[1] != edge2[0] and edge1[1] != edge2[1]:
+            # sprawdzam w grafie G czy istnieje już któraś z dwóch krawędzi, którą zamierzamy dodać do grafu
+            # ma to zapobiec dodaniu krawędzi wielokrotnych
+            # sprawdzenie to jest zawsze dla dwóch przypadków, bo w grafie G przechowywane są krawędzie zawsze o posortowanej kolejności wierzchołków,
+            # ( tzn. może istnieć krawędź [0,9], ale nie moze istnieć krawędź [9,0] )
+
             if edge1[0] < edge2[1] and G.has_edge(edge1[0], edge2[1]):
                 return False
             elif edge1[0] > edge2[1] and G.has_edge(edge2[1], edge1[0]):
                 return False
+
             if (edge1[1] < edge2[0]) and G.has_edge(edge1[1], edge2[0]):
                 return False
             elif (edge1[1] > edge2[0]) and G.has_edge(edge2[0], edge1[1]):
                 return False
+
+            #jeżeli wierzchołek się nie powtarza, a krawędzie jeszcze nie isteniją w grafie - zwracamy True
             return True
         return False
 
-    # ZADANIE 2
-
+    # Funkcja randomizująca grafy proste zadaną ilość razy
     @staticmethod
     def randomize_graph_adj_matrix(G, number):
+        # ilość krawędzi w grafie
         number_of_edges = len(G.edges())
 
         # flaga dla upewnienia, że graf zostanie zmodyfikowany 'number' razy
@@ -107,15 +126,25 @@ class Zestaw2_zad1_zad2:
         while i < number:
             has_been_change = False
             list_of_edges = list(G.edges())
-            #indeksy krawędzi, czyli numery wierzchołka pierwszego i drugiego
+
+            # losuję indeks pierwszej i drugiej krawędzi (od zera do (ilosć krawędzi - 1) )
             edge1_idx = random.randint(0, number_of_edges - 1)
             edge2_idx = random.randint(0, number_of_edges - 1)
+
+            # sprawdzam czy nie jest to ta sama krawędź (tzn. krawędź o tym samym indeksie)
             if edge1_idx != edge2_idx:
+                # pobieram krawędzie z listy krawędzi podając wylosowany index listy
                 edge1 = list_of_edges[edge1_idx]
                 edge2 = list_of_edges[edge2_idx]
+
+                # sprawdzam czy krawędzie mogą być zamienione
                 if Zestaw2_zad1_zad2.can_edges_be_switched(G, edge1, edge2):
+                    #usuwam obie krawędzie istniejące
                     G.remove_edge(edge1[0], edge1[1])
                     G.remove_edge(edge2[0], edge2[1])
+
+                    # porównuję indeksy wierzchołków, by dodać zamienione krawędzie o wierzchołkach w posortowanej kolejności
+                    # (ze wzgledu na użytą bibliotekę)
                     if edge1[0] < edge2[1]:
                         G.add_edge(edge1[0], edge2[1])
                     else:
@@ -127,6 +156,7 @@ class Zestaw2_zad1_zad2:
                     has_been_change = True
             if has_been_change:
                 i = i + 1
+        # zwracam graf po randomizacjach
         return G
 
     @staticmethod
@@ -140,7 +170,7 @@ class Zestaw2_zad1_zad2:
         # Posortuj tablice nierosnąco
         list = sorted(list, reverse=True)
 
-        #
+        # adj_matrix - macierz sąsiedztwa
         is_graph_sequence, adj_matrix = Zestaw2_zad1_zad2.is_graphical(list)
         if is_graph_sequence:
             # zad1
