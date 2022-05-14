@@ -133,6 +133,9 @@ class Graph:
         if num_edges > num_nodes * (num_nodes - 1) / 4:# jezeli duzo krawedzi to latwiej z pelnego grafu usuwac krawedzie niz do pustego dodawac
             adjast_matrix = np.ones((num_nodes, num_nodes))
             _ = 0
+            for __ in range(num_nodes):
+                adjast_matrix[__][__] = 0;# making sure not to connect node to itself
+
             while _ < num_nodes * (num_nodes - 1) / 2 - num_edges:
                 i = random.randint(0, num_nodes)
                 j = random.randint(0, num_nodes)
