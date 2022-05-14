@@ -116,19 +116,61 @@ class Z3Zad1:
   def print_shortest_paths(G, s):
     d_s, p_s = Z3Zad1.dijkstra(G, s)
 
-    print(p_s)
-
     # pętla wszystkich najkrótszych ścieżek w grafie
-    for u, i in enumerate(p_s):
-      predecessors = [] # odwiedzone węzły w danej ścieżce
+    for i, u in enumerate(p_s):
+      # odwiedzone węzły w danej ścieżce, na początku iteracji i jest węzłem końcowym, 
+      # więc można go wstawić na początek tablicy poprzedników
+      predecessors = [i]
       current_node = u
-      while current_node != None: # pierwszy element tablicy p to zawsze będzie None lub 0
-        predecessors.insert(current_node, 0)
-        current_node = p_s[current_node] # i-ty element w tablicy p wskazuje poprzednika i-tego węzła
+      # pierwszy element tablicy p to zawsze będzie None lub 0
+      while current_node != None: 
+        predecessors.insert(0, current_node)
+        # i-ty element w tablicy p wskazuje poprzednika i-tego węzła
+        current_node = p_s[current_node] 
       
-      predecessors.insert(current_node, 0) # pętla while nie wstawi nam węzła początkowego - musimy to zrobić ręcznie
+      print(f'd({i}) = {d_s[i]} ==> {predecessors}')
 
-      print(f'd({i}) = d({d_s[i]}) ==> {predecessors}')
+  # ZADANIE 3 -------------------------------------------------------
+  # Wyznaczyc macierz odległosci miedzy wszystkimi parami wierzchołków
+  # na tym grafie.
+  @staticmethod
+  def distance_matrix_from_graph(G):
+    dist_m = np.zeros((len(G.nodes), len(G.nodes)), dtype=np.int32)
+
+    for i, u in enumerate(G.nodes):
+      dist_m[i] = Z3Zad1.dijkstra(G, u)[0]
+
+    return dist_m
+
+  # ZADANIE 4 ------------------------------------------------------------
+  # Wyznaczyc centrum grafu, to znaczy wierzchołek, którego suma odległosci
+  # do pozostałych wierzchołków jest minimalna. Wyznaczyc centrum
+  # minimax, to znaczy wierzchołek, którego odległosc do najdalszego
+  # wierzchołka jest minimalna.
+  @staticmethod
+  def graph_center(G):
+    distance_matrix = Z3Zad1.distance_matrix_from_graph(G)
+
+    row_sums = np.array([np.sum(node_distances) for node_distances in distance_matrix], dtype=np.int32)
+
+    min_sum = np.min(row_sums)
+    #  węzeł o minimalnej sumie oraz minimalna suma
+    return list(row_sums).index(min_sum), min_sum
+
+  @staticmethod
+  def minimax_center(G):
+    distance_matrix = Z3Zad1.distance_matrix_from_graph(G)
+
+    min_max_distances = np.array([np.max(distances_from_node) for distances_from_node in distance_matrix], dtype=np.int32)
+
+    minimax_distance = np.min(min_max_distances)
+    # węzeł o minimalnej największej odległości oraz minimalna największa odległość
+    return list(min_max_distances).index(minimax_distance), minimax_distance
+
+  # TODO ZADANIE 5 -----------------------------------
+  # TODO minimalne drzewo rozpinające (metoda Kruskala)
+  # @staticmethod
+  # def minimal_spining_tree:
 
   @staticmethod
   def main():
@@ -136,16 +178,30 @@ class Z3Zad1:
     G = Z3Zad1.generate_random_graph_with_weights()
     # print(G.edges) # krotka z wierzchołkami połączonymi ze sobą
     
+    # ZADANIE 2
+    Z3Zad1.print_shortest_paths(G, 4)
+
+    # ZADANIE 3
+    distance_matrix = Z3Zad1.distance_matrix_from_graph(G)
+    print(f"Macierz odległości:\n {distance_matrix}")
+
+    # ZADANIE 4
+    center, center_sum = Z3Zad1.graph_center(G)
+    print(f"Centrum: {center} (suma odległości: {center_sum})")
+
+    minimax, minimax_distance = Z3Zad1.minimax_center(G)
+    print(f"Centrum minimax: {minimax} (odległość od najdalszego: {minimax_distance})")
+
+
     # rysowanie grafu
     pos = nx.circular_layout(G)
     ax = plt.gca()
-    ax.set_title('Zadanie 1 | Graf spójny losowy z wagami')
+    ax.set_title('Wylosowany graf spójny losowy z wagami')
     nx.draw(G, pos, node_color="gold", with_labels=True, ax=ax)
     nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, "weight"), ax=ax, font_color='blue')
     _ = ax.axis('off')
     plt.draw()
     plt.show()
-
 
 if __name__ == "__main__":
     Z3Zad1.main()
