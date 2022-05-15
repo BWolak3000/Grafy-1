@@ -79,7 +79,7 @@ class Z3Zad1:
   # @param G - graf
   # @param s - wierzchołek startowy 
   @staticmethod
-  def dijkstra(G, s) -> None:
+  def dijkstra(G, s):
     d_s, p_s = Z3Zad1.init_d_p(G, s)
     
     # zbiór "sprawdzonych" wierzchołków; początkowo pusty
@@ -122,7 +122,7 @@ class Z3Zad1:
       # więc można go wstawić na początek tablicy poprzedników
       predecessors = [i]
       current_node = u
-      # pierwszy element tablicy p to zawsze będzie None lub 0
+      # element tablicy p odpowiadający wierzchołkowi startowemu to zawsze będzie None
       while current_node != None: 
         predecessors.insert(0, current_node)
         # i-ty element w tablicy p wskazuje poprzednika i-tego węzła
@@ -167,19 +167,39 @@ class Z3Zad1:
     # węzeł o minimalnej największej odległości oraz minimalna największa odległość
     return list(min_max_distances).index(minimax_distance), minimax_distance
 
-  # TODO ZADANIE 5 -----------------------------------
-  # TODO minimalne drzewo rozpinające (metoda Kruskala)
-  # @staticmethod
-  # def minimal_spining_tree:
+  # ZADANIE 5 -----------------------------------
+  # minimalne drzewo rozpinające (metoda Kruskala)
+  @staticmethod
+  def minimal_spining_tree(G):
+    T = nx.Graph() # drzewo, które na początku jest pustym grafem 
+    T.add_nodes_from(G) # będzie ono posiadało wszystkie wierzchołki pierwotnego grafu
+
+    # krawędzie posortowane niemalejąco według wag
+    sorted_edges_by_weight = sorted(G.edges, key=lambda edge: G[edge[0]][edge[1]]['weight'])
+    
+    for u, v in sorted_edges_by_weight:
+      T.add_edge(u, v, weight=G[u][v]['weight'])
+
+      # jeżeli dodanie krawędzi spowodowało cykle (czyli T nie jest już lasem),
+      # to usuwamy dodaną krawędź
+      if nx.is_forest(T) == False:
+        T.remove_edge(u, v)
+
+      # przerywamy wcześniej pętlę, gdy rozmiar drzewa rozpinającego wynosi liczba_węzłów-1
+      if len(T.edges) == len(G.nodes)-1:
+        break
+  
+    return T
 
   @staticmethod
   def main():
     # wygenerowanie grafu losowego spójnego z wagami
     G = Z3Zad1.generate_random_graph_with_weights()
-    # print(G.edges) # krotka z wierzchołkami połączonymi ze sobą
     
     # ZADANIE 2
-    Z3Zad1.print_shortest_paths(G, 4)
+    s = 4 # wierzchołek, po którym wyszukuje się najkrótsze ścieżki
+    print(f"Najkrótsze ścieżki dla s = {s}:")
+    Z3Zad1.print_shortest_paths(G, s)
 
     # ZADANIE 3
     distance_matrix = Z3Zad1.distance_matrix_from_graph(G)
@@ -192,9 +212,11 @@ class Z3Zad1:
     minimax, minimax_distance = Z3Zad1.minimax_center(G)
     print(f"Centrum minimax: {minimax} (odległość od najdalszego: {minimax_distance})")
 
+    # ZADANIE 5
+    T = Z3Zad1.minimal_spining_tree(G)
 
-    # rysowanie grafu
-    pos = nx.circular_layout(G)
+    # rysowanie oryginalnego grafu
+    pos = nx.spring_layout(G) # na tym layoucie najlepiej widać wagi i drzewa rozpinające
     ax = plt.gca()
     ax.set_title('Wylosowany graf spójny losowy z wagami')
     nx.draw(G, pos, node_color="gold", with_labels=True, ax=ax)
@@ -202,6 +224,22 @@ class Z3Zad1:
     _ = ax.axis('off')
     plt.draw()
     plt.show()
+
+    # rysowanie drzewa rozpinającego
+    pos = nx.spring_layout(G)
+    ax = plt.gca()
+    ax.set_title('Minimalne drzewo rozpinające wylosowanego grafu')
+    
+    nx.draw_networkx_nodes(G, pos, node_color='gold', ax=ax)
+    nx.draw_networkx_edges(T, pos, edge_color="red", ax=ax)
+    nx.draw_networkx_edges(G, pos, edgelist=list(filter(lambda e: e not in T.edges, G.edges)), ax=ax)
+    nx.draw_networkx_labels(G, pos)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, "weight"), ax=ax, font_color='blue')
+    _ = ax.axis('off')
+    plt.draw()
+    plt.show()
+
+
 
 if __name__ == "__main__":
     Z3Zad1.main()
