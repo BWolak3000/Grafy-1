@@ -13,8 +13,8 @@ def main():
 
 
 def converting_demo():
-    adjlist = read_adjust_list_from_file("testadjlist.txt")
-    G = Graph.Graph.from_adjastlist(adjlist)
+    adjlist = read_adjust_list_from_file("testadjlist.txt")# wczytuje liste sasiedztwa z pliku do formu list(list(int))
+    G = Graph.Graph.from_adjastlist(adjlist)# tworze obiekt typu graph generowany z listy sasiedztwa
     print('macierz sasiedztwa\n \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/')
     print(G.adjastMatrix)
     print('macierz incydencji\n \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/')
@@ -30,6 +30,8 @@ def generating_demo():
     show_graph(G)
 
 
+# funkcja kazda linie w pliku interpretuje jako wieszcholki na liscie sasiedztwa
+# pusta linia jest interpretowana jako wieszcholek stopnia 0
 def read_adjust_list_from_file(file_name):
     f = open(file_name, 'r')
     lines = f.read().split('\n')
@@ -40,6 +42,7 @@ def read_adjust_list_from_file(file_name):
     return result
 
 
+#z uzyciem networkx wizualizuje graf
 def show_graph(G):
     temp = list_of_lists_to_str(G.adjastList)
     G = nx.parse_adjlist(temp)
@@ -49,6 +52,8 @@ def show_graph(G):
     plt.show()
 
 
+#funkcja konwertuje format uzywany przezemnie do reprezentacji listy sasiedztwa list(list(int)) na
+# uzywana przez networkx list(str) gdzie str to string zaczynajacy sie od numeru wierzcholka a nastepnie jego zasiadow
 def list_of_lists_to_str(data):
     result = []
     for i in range(len(data)):
