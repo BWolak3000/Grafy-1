@@ -117,16 +117,24 @@ class Zestaw2_zad6:
 
     @staticmethod
     def main(args):
-        G = Zestaw2_zad6.get_random_graph()
+        # G = Zestaw2_zad6.get_random_graph()
 
-        # #Test dla grafu hamiltonowskiego
+        #Test dla grafu hamiltonowskiego
         # adj_matrix = [[0, 1, 0, 1, 0],
         #             [1, 0, 1, 1, 1],
         #             [0, 1, 0, 0, 1],
         #             [1, 1, 0, 0, 1],
         #             [0, 1, 1, 1, 0], ]
-        # adj_matrix_np = np.matrix(adj_matrix)
-        # G = nx.from_numpy_matrix(adj_matrix_np)
+        adj_matrix = [[0,1,1,1,0,0,0,0],
+                      [1,0,1,0,1,1,0,0],
+                      [0,1,0,1,0,0,1,0],
+                      [1,0,1,0,0,1,1,0],
+                      [1,1,0,0,0,0,0,1],
+                      [0,1,0,1,0,0,0,1],
+                      [0,0,1,1,0,0,0,1],
+                      [0,0,0,0,1,1,1,0]]
+        adj_matrix_np = np.matrix(adj_matrix)
+        G = nx.from_numpy_matrix(adj_matrix_np)
 
         ax = plt.gca()
         is_hamilton, path = Zestaw2_zad6.is_hamilton_graph(G)

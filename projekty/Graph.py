@@ -141,8 +141,8 @@ class Graph:
                 adjast_matrix[__][__] = 0# making sure not to connect node to itself
 
             while _ < num_nodes * (num_nodes - 1) / 2 - num_edges:
-                i = random.randint(0, num_nodes)
-                j = random.randint(0, num_nodes)
+                i = random.randint(0, num_nodes - 1)
+                j = random.randint(0, num_nodes - 1)
                 if adjast_matrix[i][j] == 0:
                     continue
                 else:
@@ -193,7 +193,7 @@ if __name__ == '__main__':# main do gebugowania
     #G = Graph.from_adjastlist([[2, 5], [1, 3, 4], [5, 2, 4], [2, 3], [3, 1]])
     #G = Graph.from_adjastmatrix([[0, 1, 1], [1, 0, 0], [1, 0, 0]])
     G = Graph.from_incidencematrix([[0, 1, 1, 0], [1, 0, 1, 0], [0, 0, 1, 1]])
-    G = Graph.generate_graph_nl(4, 3)
+    #G = Graph.generate_graph_nl(4, 3)
     G.generate_representations()
     G2 = Graph.from_adjastlist(G.adjastList)
     print_graf(G)

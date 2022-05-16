@@ -23,10 +23,10 @@ def converting_demo():
 
 
 def generating_demo():
-    G = Graph.Graph.generate_graph_np(8, 0.6)
+    G = Graph.Graph.generate_graph_np(8, 1)
     show_graph(G)
 
-    G = Graph.Graph.generate_graph_nl(5, 10)
+    G = Graph.Graph.generate_graph_nl(5, 9)
     show_graph(G)
 
 
@@ -39,6 +39,7 @@ def read_adjust_list_from_file(file_name):
     for line in lines:
         l = line.split(' ')
         result.append([int(_) for _ in l])
+    f.close()
     return result
 
 

@@ -54,7 +54,7 @@ class Zestaw2_zad1_zad2:
             # jeżeli stopień wierzchołka o największym stopniu jest większy niż ilość wierzchołków
             # lub stopień dowolnego wierzchołka jest ujemny
             # to ciąg nie jest graficzny
-            if list_of_vertices[0][1] >= size or any(list_of_vertices[i][1] < 0 for i in range(0, size)):
+            if list_of_vertices[0][1] > size or any(list_of_vertices[i][1] < 0 for i in range(0, size)):
                 return False, None
 
             # przed rozpoczęciem wewnętrznej pętli wybieramy wierzchołek o największym stopniu,
@@ -168,10 +168,15 @@ class Zestaw2_zad1_zad2:
     @staticmethod
     def main(args):
         # przyklad ciągu graficznego
-        list = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
+        # list = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
+        list = [5, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
+        list = [6,6,6,6,6,6]
 
         # przyklad ciągu niegraficznego
         # list = [4, 4, 3, 1, 2]
+
+        # przyklad z zajec BW
+        # list = [4, 4, 4, 4, 2, 2]
 
         # Posortuj tablice nierosnąco
         list = sorted(list, reverse=True)

@@ -79,7 +79,8 @@ class Zestaw2_zad3:
     @staticmethod
     def main(args):
         # input: sekwencja stopni wierzchołków
-        degree_sequence = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
+        # degree_sequence = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
+        degree_sequence = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2, 2, 2, 2]
 
         # wykorzystanie funkcji z zadania 1, która zwraca macierz sąsiedztwa adj_matrix, jeżeli ciąg jest graficzny
         is_graph_sequence, adj_matrix = Zestaw2_zad1_zad2.is_graphical(degree_sequence)
