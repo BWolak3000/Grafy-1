@@ -1,9 +1,14 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
-from zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
-from zestaw2_zad3 import Zestaw2_zad3
 import random
+
+try:
+  from zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
+  from zestaw2_zad3 import Zestaw2_zad3
+except:
+  from zestaw2.zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
+  from zestaw2.zestaw2_zad3 import Zestaw2_zad3
 
 
 # ZADANIE 4 ---------------------------------------------------------

@@ -32,7 +32,7 @@ def generate_random_graph_with_weights():
   adj_matrix_np = np.matrix(adj_matrix)
   G = nx.from_numpy_matrix(adj_matrix_np)
   G = Zestaw2_zad1_zad2.randomize_graph_adj_matrix(G, 10)
-
+  
   # dodawanie wag do krawędzi
   for u, v in G.edges:
     G[u][v]["weight"] = random.randint(1,10)

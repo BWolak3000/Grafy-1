@@ -1,10 +1,16 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
-from zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
-from zestaw2_zad3 import Zestaw2_zad3
-from zestaw2_zad4 import Zestaw2_zad4
 import random
+
+try:
+  from zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
+  from zestaw2_zad3 import Zestaw2_zad3
+  from zestaw2_zad4 import Zestaw2_zad4
+except:
+  from zestaw2.zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
+  from zestaw2.zestaw2_zad3 import Zestaw2_zad3
+  from zestaw2.zestaw2_zad4 import Zestaw2_zad4
 
 # ZADANIE 5 ---------------------------------------------------------
 # 5. Napisac program do generowania losowych grafów k-regularnych.

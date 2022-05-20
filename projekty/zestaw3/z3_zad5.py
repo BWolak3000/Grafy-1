@@ -2,7 +2,6 @@ import networkx as nx
   
 # ZADANIE 5 -----------------------------------
 # minimalne drzewo rozpinające (metoda Kruskala)
-  
 
 def minimal_spanning_tree(G):
   T = nx.Graph() # drzewo, które na początku jest pustym grafem 

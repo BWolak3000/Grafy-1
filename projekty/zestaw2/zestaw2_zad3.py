@@ -1,8 +1,12 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
-from zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
 
+try:
+  from zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
+
+except:
+  from zestaw2.zestaw2_zad1_zad2 import Zestaw2_zad1_zad2
 
 class Zestaw2_zad3:
 

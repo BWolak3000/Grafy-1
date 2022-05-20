@@ -8,13 +8,23 @@ import z3_zad4
 import z3_zad5
 
 def main():
+  # ZADANIE 1
   # wygenerowanie grafu losowego spójnego z wagami
-  G = z3_zad1.generate_random_graph_with_weights()
+  try:
+    G = z3_zad1.generate_random_graph_with_weights()
+  except:
+    print("Podany ciąg nie jest ciągiem graficznym, program zakończył działanie")
+    return
   
   # ZADANIE 2
   s = 4 # wierzchołek, po którym wyszukuje się najkrótsze ścieżki
   print(f"Najkrótsze ścieżki dla s = {s}:")
-  z3_zad2.print_shortest_paths(G, s)
+
+  try:
+    z3_zad2.print_shortest_paths(G, s)
+  except:
+    print("Podany wierzchołek nie znajduje się w grafie")
+    return
 
   # ZADANIE 3
   distance_matrix = z3_zad3.distance_matrix_from_graph(G)
@@ -30,7 +40,7 @@ def main():
   # ZADANIE 5
   T = z3_zad5.minimal_spanning_tree(G)
 
-  # rysowanie drzew
+  # rysowanie grafów
   draw_functions.graph_with_weights(G)
   draw_functions.graph_with_spanning_tree(G, T)
 
