@@ -1,5 +1,3 @@
-from math import inf
-
 import draw_functions
 import z3_zad1
 import z3_zad2
