@@ -51,10 +51,10 @@ class Zestaw2_zad1_zad2:
                 return True, adj_matrix1
 
             # implementacja kroku 5 zadanego algoytmu
-            # jeżeli stopień wierzchołka o największym stopniu jest większy niż ilość wierzchołków
+            # jeżeli stopień wierzchołka o największym stopniu jest większy bądź równy niż ilość wierzchołków
             # lub stopień dowolnego wierzchołka jest ujemny
             # to ciąg nie jest graficzny
-            if list_of_vertices[0][1] > size or any(list_of_vertices[i][1] < 0 for i in range(0, size)):
+            if list_of_vertices[0][1] >= size or any(list_of_vertices[i][1] < 0 for i in range(0, size)):
                 return False, None
 
             # przed rozpoczęciem wewnętrznej pętli wybieramy wierzchołek o największym stopniu,

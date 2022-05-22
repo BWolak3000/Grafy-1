@@ -6,23 +6,39 @@ import z3_zad4
 import z3_zad5
 
 def main():
+  list_of_node_degrees = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
+  # list_of_node_degrees = [5, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
+  # list_of_node_degrees = [6, 6, 6, 6, 6, 4]
+
+  # przyklad ciągu niegraficznego
+  # list_of_node_degrees = [4, 4, 3, 1, 2]
+
+  # przyklad z zajec BW
+  # list = [4, 4, 4, 4, 2, 2]
+
+  if max(list_of_node_degrees) >= len(list_of_node_degrees):
+    print("Co najmniej jeden ze stopni wierzchołka jest większy bądź równy liczbie wierzchołków")
+    return
+  
   # ZADANIE 1
   # wygenerowanie grafu losowego spójnego z wagami
   try:
-    G = z3_zad1.generate_random_graph_with_weights()
+    G = z3_zad1.generate_random_graph_with_weights(list_of_node_degrees)
+  except ValueError as err:
+    print(err)
+    return
   except:
-    print("Podany ciąg nie jest ciągiem graficznym, program zakończył działanie")
+    print("Nie podano ciągu graficznego lub ciąg graficzny jest pusty")
     return
   
   # ZADANIE 2
-  s = 4 # wierzchołek, po którym wyszukuje się najkrótsze ścieżki
+  s = 1 # wierzchołek, po którym wyszukuje się najkrótsze ścieżki
   print(f"Najkrótsze ścieżki dla s = {s}:")
 
   try:
     z3_zad2.print_shortest_paths(G, s)
   except:
     print("Podany wierzchołek nie znajduje się w grafie")
-    return
 
   # ZADANIE 3
   distance_matrix = z3_zad3.distance_matrix_from_graph(G)
