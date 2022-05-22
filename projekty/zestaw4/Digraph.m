@@ -70,6 +70,7 @@ classdef Digraph
                 
             else    
                 if msize(1) == msize(2)
+                    obj.Nodes = 1:msize(1);
                     obj.Edges = zeros(3, sum(matrix~=0, 'all'));
                     obj = fromAdjacencyMatrix(obj, matrix);
                 else
@@ -81,13 +82,7 @@ classdef Digraph
         
         function d = getDigraph(obj)
             %GETDIGRAPH Converter to matlab digraph representation
-            e = obj.Edges;
-            esize = size(e);
-            if esize(1) > 2
-                d = digraph(e(1,:), e(2,:), e(3, :));
-            else
-                d = digraph(e(1,:), e(2,:));
-            end
+            d = digraph(obj.getAdjacencyMatrix());
         end
         
         function A = getAdjacencyMatrix(obj)
@@ -116,12 +111,11 @@ classdef Digraph
         
         function handle = plot(obj)
             esize = size(obj.Edges);
+            d = obj.getDigraph();
             if esize(1) > 2
-                d = digraph(obj.Edges(1,:), obj.Edges(2,:), obj.Edges(3, :));
-                LWidths = 5*d.Edges.Weight/max(d.Edges.Weight);
+                LWidths = abs(5*d.Edges.Weight/max(d.Edges.Weight));
                 handle = plot(d,'EdgeLabel',d.Edges.Weight,'LineWidth',LWidths);
             else
-                d = digraph(obj.Edges(1,:), obj.Edges(2,:));
                 handle = plot(d);
             end
         end

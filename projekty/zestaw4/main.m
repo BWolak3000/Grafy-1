@@ -1,7 +1,7 @@
 close all; clear; clc;
 
-n = 10;
-p = 0.3;
+n = 5;
+p = 0.5;
 digraph1 = genRandDigraph(n, p);
 digraph1t = digraph1.transpose();
 subplot(1, 2, 1);

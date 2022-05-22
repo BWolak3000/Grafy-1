@@ -5,8 +5,8 @@ function d = genRandDigraph(n, p)
     if p<0 || p>1
         error("Propability out of range [0, 1]");
     end
-    if n<=0
-        error("Number of vertices to small! Must be >= 1");
+    if n<=1
+        error("Number of vertices to small! Must be > 1");
     end
     A = rand(n);
     A = A<=p;
