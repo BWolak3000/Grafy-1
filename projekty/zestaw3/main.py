@@ -7,14 +7,8 @@ import z3_zad5
 
 def main():
   list_of_node_degrees = [4, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
-  # list_of_node_degrees = [5, 2, 2, 3, 2, 1, 4, 2, 2, 2, 2]
-  # list_of_node_degrees = [6, 6, 6, 6, 6, 4]
-
-  # przyklad ciągu niegraficznego
-  # list_of_node_degrees = [4, 4, 3, 1, 2]
-
-  # przyklad z zajec BW
-  # list = [4, 4, 4, 4, 2, 2]
+  # przykład z zajęć
+  # list_of_node_degrees = [4, 4, 4, 3, 3, 2]
 
   if max(list_of_node_degrees) >= len(list_of_node_degrees):
     print("Co najmniej jeden ze stopni wierzchołka jest większy bądź równy liczbie wierzchołków")

@@ -37,10 +37,14 @@ def generate_random_graph_with_weights(list_of_node_degrees):
   # z wierzchołkiem o stopniu o 1 mniejszym od liczby wierzchołków
   if max(list_of_node_degrees) != len(list_of_node_degrees) - 1:
     G = Zestaw2_zad1_zad2.randomize_graph_adj_matrix(G, 10)
-
+    
     # losujemy taki graf, aby był spójny (jeśli uzyskanie spójności jest możliwe)
-    while nx.is_connected(G) == False:
-      G = Zestaw2_zad1_zad2.randomize_graph_adj_matrix(G, 10)
+    # ale tylko wtedy, kiedy wylosowany graf nie jest spójny
+    # zapobiega to nieskończonej pętli w funkcji randomize_graph_adj_matrix, 
+    # która wystąpiła na przykładzie z zajęć
+    if nx.is_connected(G) == False: # bez tej linijki - nieskończona pętla dla przykładu z zajęć
+      while nx.is_connected(G) == False:
+        G = Zestaw2_zad1_zad2.randomize_graph_adj_matrix(G, 10)
 
   # dodawanie wag do krawędzi
   for u, v in G.edges:
