@@ -1,0 +1,20 @@
+clear; close all; clc;
+
+load('output.csv');
+load('input_150.dat');
+output = [output; output(1, :)];
+subplot(1,2,2);
+plot(output(:, 1), output(:, 2), '*r', output(:, 1), output(:, 2));
+distances = output(1:end-1, :) - output(2:end, :);
+distances = distances.^2;
+distances = distances(:, 1) + distances(:, 2);
+odistance = sum(sqrt(distances));
+title("Optimized route d="+odistance);
+subplot(1,2,1);
+input_150 = [input_150; input_150(1, :)];
+plot(input_150(:, 1), input_150(:, 2), '*r', input_150(:, 1), input_150(:, 2));
+distances = input_150(1:end-1, :) - input_150(2:end, :);
+distances = distances.^2;
+distances = distances(:, 1) + distances(:, 2);
+idistance = sum(sqrt(distances));
+title("Initial route d="+idistance);
