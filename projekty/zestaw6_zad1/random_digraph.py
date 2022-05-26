@@ -1,5 +1,5 @@
 import random
-import string # do generowania węzłów będących literami alfabetu
+import string # pomocnicze - do generowania węzłów będących literami alfabetu
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -15,17 +15,16 @@ def generate_adjacency_list(n):
   for node in nodes:
     # aby uniknąć odwołań do siebie samego
     other_nodes = [nd for nd in nodes if nd != node]
-    # losowanie listy sąsiedztwa
-    # każdy węzeł może mieć od jednego do n-1 sąsiadów
-    # TODO wymyślić lepszy sposób generowania listy sąsiedztwa - obecnie lista sąsiadów jest zbyt równomierna
-    adj_list[node] = {random.choice(other_nodes) for _ in range(1,len(nodes))}
+    # losowanie listy sąsiedztwa na podstawie rozkładu normalnego
+    # w ten sposób liczby sąsiadów są bardziej zróżnicowane
+    num_of_neighbors = round(abs(random.gauss(2, n/5)))+1
+    adj_list[node] = {random.choice(other_nodes) for _ in range(num_of_neighbors)}
 
   return adj_list
 
 
-def generate_random_digraph(n):
+def generate_random_digraph(adj_list):
   G = nx.DiGraph()
-  adj_list = generate_adjacency_list(n)
 
   # tworzenie krawędzi na podstawie listy sąsiedztwa
   edges = [(u, v) for u, nbrs in adj_list.items() for v in nbrs]

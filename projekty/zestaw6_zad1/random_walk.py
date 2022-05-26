@@ -30,4 +30,4 @@ def random_walk(G, d, N):
   for node in G.nodes():
     page_rank_visits_ratio[node] /= N
   
-  return page_rank_visits_ratio
+  return dict(sorted(page_rank_visits_ratio.items(), key=lambda x: -x[1]))
