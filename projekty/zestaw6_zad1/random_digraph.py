@@ -21,9 +21,8 @@ def generate_adjacency_list(n) -> dict:
   for node in nodes:
     # aby uniknąć odwołań do siebie samego
     other_nodes = [nd for nd in nodes if nd != node]
-    # losowanie listy sąsiedztwa na podstawie rozkładu normalnego
-    # w ten sposób liczby sąsiadów są bardziej zróżnicowane
-    num_of_neighbors = round(abs(random.gauss(0, 2)))+1
+    # losowanie liczby sąsiadów oraz listy sąsiedztwa
+    num_of_neighbors = random.randint(1, n)
     adj_list[node] = {random.choice(other_nodes) for _ in range(num_of_neighbors)}
 
   return adj_list

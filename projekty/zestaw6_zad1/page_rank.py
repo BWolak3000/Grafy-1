@@ -24,17 +24,16 @@ def random_walk(G, d, N) -> dict:
   current_node = random.choice(list(G.nodes()))
   
   for _ in range(N):
+    neighbors = list(G.neighbors(current_node))
     # losowanie wartości z zakresu [0,1]
     # jeżeli wartość jest mniejsza od d - teleportacja,
     # czyli przejście do losowego wierzchołka w grafie
     if random.random() < d:
-      other_nodes = [node for node in G.nodes() 
-        if node not in list(G.neighbors(current_node)) and node != current_node]
-      
+      other_nodes = [node for node in G.nodes() if node != current_node]
       current_node = random.choice(other_nodes)
     # w przeciwnym razie przejście do losowego z sąsiadów
     else:
-      current_node = random.choice(list(G.neighbors(current_node)))
+      current_node = random.choice(neighbors)
 
     page_rank_visits_ratio[current_node] += 1
 
@@ -46,6 +45,7 @@ def random_walk(G, d, N) -> dict:
 
 
 # b) Metoda iteracji wektora obsadzen (czyli metoda potęgowa)
+
 def power_method(G, d, N) -> dict:
   '''
   Oblicza PageRank za pomocą metody potęgowej
@@ -73,10 +73,18 @@ def power_method(G, d, N) -> dict:
     for j in range(n):
       P[i][j] = (1-d) * A[i][j]/d_i[i] + d/n
 
+  it = 0
   # mnożenie wektora p_t i macierzy P
   for _ in range(N):
+    it += 1
+    p_t_old = p_t
     p_t = np.dot(p_t, P)
-  
+    
+    # jeśli jest zbieżność, przerwij pętlę
+    if False not in (np.abs(p_t - p_t_old) < 1e-7):
+      break
+    
+
   page_rank_visits_ratio = {node: p for node, p in zip(G.nodes, p_t)}
 
-  return dict(sorted(page_rank_visits_ratio.items(), key=lambda x: -x[1]))
+  return dict(sorted(page_rank_visits_ratio.items(), key=lambda x: -x[1])), it

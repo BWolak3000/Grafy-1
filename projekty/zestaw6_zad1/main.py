@@ -43,8 +43,9 @@ def main() -> None:
     print(f'Obliczanie Page Rank - metoda potęgowa... (N = {N_b})')
 
     outfile.write(f'Algorytm PageRank - metoda potęgowa (N = {N_b}):\n')
-    power_method_probabilities = page_rank.power_method(G, d, N_b)
+    power_method_probabilities, it = page_rank.power_method(G, d, N_b)
     write_methods.save_page_rank(power_method_probabilities, outfile)
+    outfile.write(f'Liczba iteracji metody potęgowej, po której uzyskano zbieżność: {it}')
     print('Gotowe')
 
   print(f'Program zakończył działanie - wyniki zapisano do pliku result.txt')
