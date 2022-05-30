@@ -1,0 +1,37 @@
+Lista sąsiedztwa:
+A: {'D', 'G', 'E', 'J'}
+B: {'A', 'F', 'H', 'E', 'D', 'G'}
+C: {'E'}
+D: {'A', 'H', 'I', 'C', 'F', 'G'}
+E: {'C', 'H', 'J'}
+F: {'A', 'E', 'C', 'D', 'G'}
+G: {'A', 'H', 'C', 'D', 'J'}
+H: {'A', 'I', 'D', 'F', 'J', 'B'}
+I: {'A', 'F', 'H', 'E', 'C', 'G', 'J'}
+J: {'E', 'D', 'H', 'I'}
+
+Algorytm PageRank - błądzenie przypadkowe (N = 1000000):
+E ==> PageRank: 0.181362
+H ==> PageRank: 0.134286
+J ==> PageRank: 0.125655
+C ==> PageRank: 0.114131
+D ==> PageRank: 0.107496
+A ==> PageRank: 0.087554
+I ==> PageRank: 0.076072
+G ==> PageRank: 0.074398
+F ==> PageRank: 0.064067
+B ==> PageRank: 0.034979
+
+Algorytm PageRank - metoda potęgowa (N = 100):
+E ==> PageRank: 0.182418
+H ==> PageRank: 0.135304
+J ==> PageRank: 0.126055
+C ==> PageRank: 0.114471
+D ==> PageRank: 0.107539
+A ==> PageRank: 0.086795
+I ==> PageRank: 0.076189
+G ==> PageRank: 0.073565
+F ==> PageRank: 0.063495
+B ==> PageRank: 0.034168
+
+Liczba iteracji metody potęgowej, po której uzyskano zbieżność: 23

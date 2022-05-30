@@ -1,7 +1,6 @@
 import random
 import string # pomocnicze - do generowania węzłów będących literami alfabetu
 import networkx as nx
-import matplotlib.pyplot as plt
 
 def generate_adjacency_list(n) -> dict:
   '''

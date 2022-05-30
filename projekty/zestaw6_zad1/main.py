@@ -4,7 +4,7 @@ import page_rank
 import write_methods
 
 def main() -> None:
-  n = input('Podaj liczbę węzłów (od 2 do 32)\n')
+  n = input('Podaj liczbę węzłów (od 2 do 26)\n')
 
   try: 
     n = int(n)
@@ -12,7 +12,7 @@ def main() -> None:
     print(f'{n} to nie liczba całkowita - wyjście z programu')
     return
   
-  if n < 2 or n > 32:
+  if n < 2 or n > 26:
     print('Niewłaściwa wartość liczby węzłów')
     return
 
